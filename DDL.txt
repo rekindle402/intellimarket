@@ -1,0 +1,440 @@
+-- intellimarket.address_snapshot definition
+
+CREATE TABLE `address_snapshot` (
+  `address_snapshot_id` int NOT NULL AUTO_INCREMENT,
+  `zip_code` int NOT NULL,
+  `address` varchar(50) NOT NULL,
+  `detal_address` varchar(50) NOT NULL,
+  PRIMARY KEY (`address_snapshot_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.banners definition
+
+CREATE TABLE `banners` (
+  `banner_id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `image_path` varchar(255) NOT NULL,
+  `status` char(1) NOT NULL DEFAULT 'Y',
+  `link_url` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`banner_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.coupon_codes definition
+
+CREATE TABLE `coupon_codes` (
+  `coupon_code_id` int NOT NULL AUTO_INCREMENT,
+  `coupon_code` varchar(100) NOT NULL,
+  PRIMARY KEY (`coupon_code_id`),
+  UNIQUE KEY `coupon_code` (`coupon_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.inquiry_types definition
+
+CREATE TABLE `inquiry_types` (
+  `inquiry_type_id` int NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`inquiry_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.market_admin definition
+
+CREATE TABLE `market_admin` (
+  `market_admin_id` int NOT NULL AUTO_INCREMENT,
+  `admin_id` varchar(50) NOT NULL,
+  `passwrod` varchar(100) NOT NULL,
+  PRIMARY KEY (`market_admin_id`),
+  UNIQUE KEY `admin_id` (`admin_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.market_events definition
+
+CREATE TABLE `market_events` (
+  `market_event_id` int NOT NULL AUTO_INCREMENT,
+  `event_name` varchar(100) NOT NULL,
+  `event_detail` text NOT NULL,
+  PRIMARY KEY (`market_event_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.members definition
+
+CREATE TABLE `members` (
+  `member_id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `birth` date NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `status` enum('ACTIVE','INACTIVE') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'ACTIVE',
+  `zip_code` int NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `detail_address` varchar(255) NOT NULL,
+  `gender` enum('M','F') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `role` enum('USER','ADMIN') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'USER',
+  `inactive_reason` varchar(255) DEFAULT NULL COMMENT '비활성 사유',
+  PRIMARY KEY (`member_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.product_answers definition
+
+CREATE TABLE `product_answers` (
+  `product_answer_id` int NOT NULL AUTO_INCREMENT,
+  `product_question_id` int NOT NULL,
+  `answer_content` varchar(255) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`product_answer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.question_types definition
+
+CREATE TABLE `question_types` (
+  `question_type_id` int NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`question_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.root_categories definition
+
+CREATE TABLE `root_categories` (
+  `root_category_id` int NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`root_category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.sellers definition
+
+CREATE TABLE `sellers` (
+  `seller_id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `business_num` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `tel` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `detail_address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `zip_code` int NOT NULL,
+  `status` enum('PENDING','APPROVED','REJECTED','SUSPENDED') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'PENDING',
+  `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reject_msg` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `account_num` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '계좌번호',
+  `bank` varchar(25) NOT NULL,
+  PRIMARY KEY (`seller_id`),
+  UNIQUE KEY `emaill` (`email`),
+  UNIQUE KEY `business_num` (`business_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.market_faq definition
+
+CREATE TABLE `market_faq` (
+  `marke_faq_id` int NOT NULL AUTO_INCREMENT,
+  `question_type_id` int NOT NULL,
+  `question_title` varchar(50) NOT NULL,
+  `question_content` varchar(255) NOT NULL,
+  `answer_content` varchar(255) NOT NULL,
+  PRIMARY KEY (`marke_faq_id`),
+  KEY `question_type_id` (`question_type_id`),
+  CONSTRAINT `market_faq_ibfk_1` FOREIGN KEY (`question_type_id`) REFERENCES `question_types` (`question_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.market_questions definition
+
+CREATE TABLE `market_questions` (
+  `market_question_id` int NOT NULL AUTO_INCREMENT,
+  `question_type_id` int NOT NULL,
+  `member_id` int NOT NULL,
+  `question_title` varchar(50) NOT NULL,
+  `question_content` varchar(255) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_answer` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`market_question_id`),
+  KEY `question_type_id` (`question_type_id`),
+  KEY `member_id` (`member_id`),
+  CONSTRAINT `market_questions_ibfk_1` FOREIGN KEY (`question_type_id`) REFERENCES `question_types` (`question_type_id`),
+  CONSTRAINT `market_questions_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.store_info definition
+
+CREATE TABLE `store_info` (
+  `store_info_id` int NOT NULL AUTO_INCREMENT,
+  `store_name` varchar(50) NOT NULL,
+  `store_tel` varchar(50) NOT NULL,
+  `store_rank` enum('학사','석사','박사') NOT NULL DEFAULT '학사',
+  `logo_path` varchar(255) DEFAULT NULL,
+  `seller_id` int DEFAULT NULL,
+  `store_introduce` varchar(50) NOT NULL DEFAULT '',
+  `eng_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`store_info_id`),
+  UNIQUE KEY `unique_eng_name` (`eng_name`),
+  KEY `fk_storeinfo_seller` (`seller_id`),
+  CONSTRAINT `fk_storeinfo_seller` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`seller_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.top_categories definition
+
+CREATE TABLE `top_categories` (
+  `top_category_id` int NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(100) NOT NULL,
+  `root_category_id` int NOT NULL,
+  PRIMARY KEY (`top_category_id`),
+  KEY `fk_top_root_category` (`root_category_id`),
+  CONSTRAINT `fk_top_root_category` FOREIGN KEY (`root_category_id`) REFERENCES `root_categories` (`root_category_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.delivery_info definition
+
+CREATE TABLE `delivery_info` (
+  `delivery_info` int NOT NULL AUTO_INCREMENT,
+  `delivery_partner` varchar(100) NOT NULL,
+  `return_address` varchar(255) NOT NULL,
+  `return_expense` int NOT NULL DEFAULT '0',
+  `exchange_expense` int NOT NULL DEFAULT '0',
+  `service_reason` varchar(255) NOT NULL,
+  `service_period` varchar(255) NOT NULL,
+  `store_info_id` int NOT NULL,
+  PRIMARY KEY (`delivery_info`),
+  KEY `store_info_id` (`store_info_id`),
+  CONSTRAINT `delivery_info_ibfk_1` FOREIGN KEY (`store_info_id`) REFERENCES `store_info` (`store_info_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.market_answers definition
+
+CREATE TABLE `market_answers` (
+  `market_answer_id` int NOT NULL AUTO_INCREMENT,
+  `market_question_id` int NOT NULL,
+  `answer_content` varchar(255) NOT NULL,
+  `created_Date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `market_admin_id` int NOT NULL,
+  PRIMARY KEY (`market_answer_id`),
+  KEY `market_question_id` (`market_question_id`),
+  KEY `market_admin_id` (`market_admin_id`),
+  CONSTRAINT `market_answers_ibfk_1` FOREIGN KEY (`market_question_id`) REFERENCES `market_questions` (`market_question_id`),
+  CONSTRAINT `market_answers_ibfk_2` FOREIGN KEY (`market_admin_id`) REFERENCES `market_admin` (`market_admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.settlement definition
+
+CREATE TABLE `settlement` (
+  `settlement_id` int NOT NULL AUTO_INCREMENT,
+  `store_info_id` int NOT NULL,
+  `requested_amount` int unsigned NOT NULL COMMENT '정산 요청 금액',
+  `net_amount` int unsigned DEFAULT NULL COMMENT '실 지급액',
+  `settlement_status` enum('READY','REQUESTED','COMPLETED','FAILED') DEFAULT 'READY',
+  `settlement_requested_at` datetime DEFAULT NULL COMMENT '정산 요청일',
+  `settlement_completed_at` datetime DEFAULT NULL COMMENT '정산 완료일',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`settlement_id`),
+  KEY `fk_settlement_store` (`store_info_id`),
+  CONSTRAINT `fk_settlement_store` FOREIGN KEY (`store_info_id`) REFERENCES `store_info` (`store_info_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.sub_categories definition
+
+CREATE TABLE `sub_categories` (
+  `sub_category_id` int NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(100) NOT NULL,
+  `top_category_id` int NOT NULL,
+  PRIMARY KEY (`sub_category_id`),
+  KEY `fk_top_category` (`top_category_id`),
+  CONSTRAINT `fk_top_category` FOREIGN KEY (`top_category_id`) REFERENCES `top_categories` (`top_category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.products definition
+
+CREATE TABLE `products` (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `sub_category_id` int NOT NULL,
+  `seller_id` int NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `price` int NOT NULL,
+  `brand_name` varchar(100) NOT NULL,
+  `product_stock` int NOT NULL,
+  `is_recommand` enum('미추천','추천') NOT NULL DEFAULT '미추천',
+  `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `model_code` varchar(100) NOT NULL,
+  `origin` varchar(100) NOT NULL,
+  `market_event_id` int DEFAULT NULL,
+  `status` enum('ACTIVATE','INACTIVATE') NOT NULL DEFAULT 'ACTIVATE',
+  `sales_count` int NOT NULL DEFAULT '0',
+  `product_detail` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `discount` int NOT NULL DEFAULT '0',
+  `introduce` varchar(100) NOT NULL,
+  `sub_category_idi` int DEFAULT NULL,
+  `is_recommendmodel_code` varchar(50) DEFAULT NULL,
+  `is_recommend` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`product_id`),
+  UNIQUE KEY `model_code` (`model_code`),
+  KEY `sub_category_id` (`sub_category_id`),
+  KEY `seller_id` (`seller_id`),
+  KEY `market_event_id` (`market_event_id`),
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`sub_category_id`),
+  CONSTRAINT `products_ibfk_2` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`seller_id`),
+  CONSTRAINT `products_ibfk_3` FOREIGN KEY (`market_event_id`) REFERENCES `market_events` (`market_event_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.store_categories definition
+
+CREATE TABLE `store_categories` (
+  `store_category_id` int NOT NULL AUTO_INCREMENT,
+  `store_info_id` int NOT NULL,
+  `sub_category_id` int NOT NULL,
+  PRIMARY KEY (`store_category_id`),
+  KEY `sub_category_id` (`sub_category_id`),
+  KEY `store_info_id` (`store_info_id`),
+  CONSTRAINT `store_categories_ibfk_1` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`sub_category_id`),
+  CONSTRAINT `store_categories_ibfk_2` FOREIGN KEY (`store_info_id`) REFERENCES `store_info` (`store_info_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.cart definition
+
+CREATE TABLE `cart` (
+  `cart_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  `member_id` int DEFAULT NULL,
+  `status` int DEFAULT '0',
+  PRIMARY KEY (`cart_id`),
+  KEY `product_id` (`product_id`),
+  KEY `cart_itmes_members_FK` (`member_id`),
+  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  CONSTRAINT `cart_itmes_members_FK` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.coupons definition
+
+CREATE TABLE `coupons` (
+  `coupon_id` int NOT NULL AUTO_INCREMENT,
+  `discount_price` int NOT NULL,
+  `coupon_code_id` int DEFAULT NULL,
+  `coupon_name` varchar(50) DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  PRIMARY KEY (`coupon_id`),
+  KEY `coupon_code_id` (`coupon_code_id`),
+  KEY `fk_coupons_product` (`product_id`),
+  CONSTRAINT `coupons_ibfk_1` FOREIGN KEY (`coupon_code_id`) REFERENCES `coupon_codes` (`coupon_code_id`),
+  CONSTRAINT `fk_coupons_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.orders definition
+
+CREATE TABLE `orders` (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `quantity` int NOT NULL,
+  `zip_code` int NOT NULL,
+  `address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `detail_address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `member_id` int NOT NULL,
+  `order_status` enum('ORDER_CONFIRMED','PREPARING_SHIPMENT','IN_TRANSIT','DELIVERED','CANCEL','CHANGE','RETURN','CANCEL_COMPLETE','CHANGE_COMPLETE','RETURN_COMPLETE','PURCHASE_CONFIRMED') DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `product_id` int NOT NULL,
+  `merchant_uid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `total_price` int NOT NULL,
+  PRIMARY KEY (`order_id`),
+  KEY `member_id` (`member_id`),
+  KEY `fk_orders_product` (`product_id`),
+  CONSTRAINT `fk_orders_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.product_images definition
+
+CREATE TABLE `product_images` (
+  `product_image_id` int NOT NULL AUTO_INCREMENT,
+  `filename` varchar(255) NOT NULL,
+  `product_id` int NOT NULL,
+  PRIMARY KEY (`product_image_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.product_questions definition
+
+CREATE TABLE `product_questions` (
+  `product_question_id` int NOT NULL AUTO_INCREMENT,
+  `question_title` varchar(100) NOT NULL,
+  `question_content` varchar(255) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_answerd` tinyint(1) NOT NULL DEFAULT '0',
+  `is_secret` tinyint(1) NOT NULL DEFAULT '0',
+  `member_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  PRIMARY KEY (`product_question_id`),
+  KEY `member_id` (`member_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `product_questions_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`),
+  CONSTRAINT `product_questions_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.product_reviews definition
+
+CREATE TABLE `product_reviews` (
+  `product_review_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `review_title` varchar(255) NOT NULL,
+  `review_content` text NOT NULL,
+  `rating` tinyint NOT NULL,
+  `member_id` int NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`product_review_id`),
+  KEY `product_id` (`product_id`),
+  KEY `member_id` (`member_id`),
+  CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  CONSTRAINT `product_reviews_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.review_comments definition
+
+CREATE TABLE `review_comments` (
+  `review_comment_id` int NOT NULL AUTO_INCREMENT,
+  `product_review_id` int NOT NULL,
+  `comment_content` varchar(255) NOT NULL,
+  `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`review_comment_id`),
+  KEY `product_review_id` (`product_review_id`),
+  CONSTRAINT `review_comments_ibfk_1` FOREIGN KEY (`product_review_id`) REFERENCES `product_reviews` (`product_review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- intellimarket.review_images definition
+
+CREATE TABLE `review_images` (
+  `review_image_id` int NOT NULL AUTO_INCREMENT,
+  `product_review_id` int NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  PRIMARY KEY (`review_image_id`),
+  KEY `product_review_id` (`product_review_id`),
+  CONSTRAINT `review_images_ibfk_1` FOREIGN KEY (`product_review_id`) REFERENCES `product_reviews` (`product_review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

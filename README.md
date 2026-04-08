@@ -1,129 +1,198 @@
-# 🛍️  Intelli Market (온라인 마켓플레이스)
+# 🛒 Intelli Market
+> **다수 판매자의 독립 스토어 운영을 지원하는 데이터 주도형 오픈마켓 플랫폼**
 
-> 인텔리마켓은 다수의 판매자와 소비자가 온라인상에서 상거래를 할 수 있도록 중개 역할을 수행하는 플랫폼 입니다.
->
-> 네이버 스마트스토어, 쿠팡등을 참고한 미니 프로젝트 입니다.
+<!-- [![Java](https://img.shields.io/badge/Java-8-orange?style=flat-square&logo=java)](https://www.java.com/)
+[![Spring](https://img.shields.io/badge/Spring-4.3.30-green?style=flat-square&logo=spring)](https://spring.io/)
+[![MyBatis](https://img.shields.io/badge/MyBatis-3.4.6-red?style=flat-square)](https://blog.mybatis.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=flat-square&logo=mysql)](https://www.mysql.com/)
+[![Maven](https://img.shields.io/badge/Maven-3.8.1-C71A36?style=flat-square&logo=apache-maven)](https://maven.apache.org/) -->
 
----
-
-## 📌 프로젝트 개요
-
-- **기획 의도**: 평범한 온라인 쇼핑몰이 아닌, 다수의 판매자가 입점하여 스토어를 관리/디자인 할 수 있는 플랫폼 개발
-  
-- **기술 스택**: 
-    - 개발 언어 : JAVA 8, JAVASCRIPT
-    - 웹 개발 기술 : JSP, CSS, HTML, Bootstrap
-    - 웹 컨테이너 : Tomcat 8.5
-    - 서버 환경 : Localhost
-    - DBMS : MySQL (Ubutntu 24.04 LTS)
-    - 빌드도구 : Maven
-    - 프레임워크
-        - Spring-webmvc, spring-security-core
-    - 라이브러리
-        -  서블릿 : servlet-api, servlet.jsp-api
-        -  JSP: JSTL
-        -  JDBC : Spring-JDBC / MySQL-connector-java
-        -  SQL 매퍼 : MyBatis / MyBatis-spring
-        -  로깅 추상화 구현: Logback / Slf4j
-        -  코드 자동 생성 : LOMBOK
-        -  JSON 직렬화 : Jackson / jackson-datatype-jsr310
-        -  이메일/편의 : javax.mail-api / sun.mail:javax.mail / spring-context-support
-        -  파일업로드 : commons-fileupload
-    - 기타 환경 :  DBeaver(DB 관리), STS(IDE), Ashion / Admin-LTE (Temlplete), ERD(ERD-CLOUD)
-    - 
-- **프로젝트 구성**: 단일 Maven 프로젝트 내 역할별 패키지 분리
-    - 플랫폼(인텔리마켓) 메인 (shop)
-    - 판매자 페이지 (store)
-    - 플랫폼 관리자 (admin)
-
----
-## 👤 팀 구성 및 역할 분담
-
-| 이름 | 담당 업무 |
-| --- | --- |
-| **구지훈 jihoon-devstu** | 요구사항 명세 설계, 판매자 어드민 페이지 디자인, 판매자 기능(상품관리, 주문관리, 정산관리) |
-| **박혜원 hye000ne** | 프로젝트 구조 설계, 로그인 세션 및 권한 관리, 공통 예외처리, 전체 디자인, 마켓 어드민 기능 전반, 공통 기능 |
-| **신주원 JuWonISee** | 소비자 마이페이지, 고객센터 페이지, 주문 관련 페이지 및 기능 (장바구니, 결제), 소비자 구매내역 관리 |
-| **정재환 rekindle402** | ERD/DB 설계, 스토어 페이지 전반, 개인 스토어 관리(카테고리, 로고, 정보), 회원인증 |
+## 1. 프로젝트 소개
+**Intelli Market**은 네이버 스마트스토어의 핵심 아키텍처를 벤치마킹하여 개발된 이커머스 플랫폼입니다. 단일 플랫폼 내에서 수많은 판매자가 자신만의 고유 URL(`engName`)과 브랜드 정체성을 가진 독립 스토어를 즉시 생성하고 운영할 수 있도록 데이터 주도형 아키텍처를 적용했습니다.
 
 ---
 
-## 📂 디렉토리 구조
+## 2. 주요 기능
+### 👤 소비자 (Shop)
+- **상품 탐색**: 카테고리별 상품 조회 및 실시간 검색.
+- **주문 프로세스**: 장바구니 담기, 결제 연동, 배송지 관리.
+- **마이페이지**: 실시간 주문 현황 트래킹
 
-```
-📦 src/main/java/com.eoneifour
-├── common                      # 공통 설정 / 유틸
-│   ├── controller/             # 메일 처리 컨트롤러
-│   ├── exception/              # 전역 예외 처리
-│   ├── service/                # 메일 서비스
-│   ├── util/                   # 세션, 쿠키, 파일관리, 암호화, 
-│   └── view/                   # 로그인 / 회원가입 뷰
-│
-├── shop, store, admin          # 플랫폼 / 스토어 / 관리자
-│   ├── controller/            
-│   ├── exception/            
-│   ├── service/              
-│   ├── domain/               
-│   ├── dao/ 
-│                                  
-├── resources
-│   ├───mapper/                 # MyBatis 매퍼
-│   ├───logback     
-│ 
-├── webapp
-    ├── WEB-INF/views            
-    ├── common/error           
-    ├── layout             
-    ├── shop
-    ├── store
+### 👨‍🏫 판매자 (Store)
+- **독립 스토어 관리**: 스토어 이름, 주소(URL), 로고 및 카테고리 커스텀 마이징
+- **비즈니스 운영**: 상품 등록/수정, 재고 관리, 실시간 주문 접수 및 배송 처리.
+- **정산 시스템**: 판매 대금 정산 요청 및 월별 매출 분석 이력 조회.
+
+### 👑 플랫폼 관리자 (Admin)
+- **입점 제어**: 판매자 입점 신청 승인/반려 및 회원 권한 관리.
+- **마케팅 운영**: 메인 배너 및 전사 이벤트 관리, 고객 센터 FAQ 관리.
+
+---
+
+## 3. 기술 스택
+| Category | Tech Stack |
+| :--- | :--- |
+| **Language/Framework** | Java 8, Spring MVC 4.3, Spring Security 4.2 |
+| **Persistence** | MyBatis 3.4, MySQL 8.0 (Ubuntu 24.04 LTS) |
+| **View/Frontend** | JSP, JSTL, Admin-LTE (Dashboard), Vanilla CSS/JS |
+| **Build/Server** | Maven, Apache Tomcat 8.5 |
+
+---
+
+## 4. 빠른 시작 (Quick Start)
+```bash
+# 1. 레포지토리 클론
+git clone https://github.com/rekindle402/intellimarket
+
+# 2. 데이터베이스 구성
+# 루트 경로의 DDL.txt를 참고하여 MySQL 스키마 및 초기 데이터 생성
+
+# 3. 서버 설정 및 실행
+# STS 또는 IntelliJ에서 Tomcat 8.5 서버에 프로젝트 배포 후 실행
 ```
 
 ---
 
-## ⚙️ 주요 기능별 요약
-
-### 🌐 플랫폼(마켓)
-- 메인페이지 : 회원가입, 로그인, 로그아웃, 비밀번호 찾기(메일 인증), 상품 리스트 출력, 배너 출력,
-  마이페이지, 장바구니, 주문(결제)
-
-### 🛍️ 스토어
-- 카테고리별 상품 리스트 출력, 상품 상세 페이지 출력, 장바구니 담기, 장바구니, 주문(결제)
-
-### 🧾 판매자
-- 상품관리, 주문관리, 스토어 관리, 정산 확인
-
-### 🛠 관리자
-- 회원관리, 스토어 관리, 판매자 관리, 마켓관리, 정산관리 등
+## 5. 상세 디렉토리 구조
+```text
+src/main/java/com/intellimarket
+├── admin                       # 플랫폼 관리자 도메인
+│   ├── controller              # 회원/스토어 승인, 배너 관리 컨트롤러
+│   ├── dao                     # 관리자 전역 데이터 액세스
+│   ├── domain                  # 관리자 관련 도메인 모델 (Banner 등)
+│   ├── exception               # 관리자 비즈니스 예외 처리
+│   └── service                 # 플랫폼 전사 관리 로직
+├── shop                        # 소비자 서비스 도메인
+│   ├── controller              # 상품 조회, 장바구니, 주문/결제 컨트롤러
+│   ├── dao                     # 주문, 회원, 장바구니 데이터 액세스
+│   ├── domain                  # 주문(Order), 회원(Member), 장바구니(Cart) 모델
+│   ├── exception               # 쇼핑몰 비즈니스 예외 처리
+│   └── service                 # 결제 및 트랜잭션 관리 로직
+├── store                       # 판매자 및 독립 스토어 도메인
+│   ├── controller              # 동적 경로 스토어 홈, 상품 관리, 정산 컨트롤러
+│   ├── dao                     # 상품, 정산, 스토어 메타데이터 데이터 액세스
+│   ├── domain                  # 상품(Product), 스토어(StoreInfo), 정산 모델
+│   ├── exception               # 스토어 운영 관련 비즈니스 예외 처리
+│   └── service                 # 계층형 카테고리 및 판매 비즈니스 로직
+├── common                      # 공통 모듈 및 인프라
+│   ├── controller, service     # 이메일 인증 등 전사 공통 기능
+│   ├── util                    # Session, Cookie, File, 암호화 유틸리티
+│   └── exception               # 전역 예외 처리기 (GlobalExceptionHandler)
+└── config                      # 시스템 환경 설정
+    ├── MyBatis, WebMvc, Security, AppConfig, TypeHandler
+```
 
 ---
-## 💻 기획안
-[기획안.pdf](https://github.com/user-attachments/files/21618776/default.pdf)
-## 💻 ERD / 테이블
-<img width="2170" height="2462" alt="Intelli Market (3)" src="https://github.com/user-attachments/assets/ec4ff1bf-403b-4b39-b8ed-9075568637a5" />
-<img width="397" height="814" alt="image" src="https://github.com/user-attachments/assets/fe58f126-fb07-4ca0-b5bd-8581e0cd47df" />
+
+## 6. 시스템 아키텍처 및 설계 특징
+
+### 📐 시스템 아키텍처 (Logical Architecture)
+
+```mermaid
+graph TD
+    subgraph "Client Layer"
+        User(["일반 소비자<br/>(Customer)"])
+        Seller(["입점 판매자<br/>(Seller)"])
+        Admin(["플랫폼 관리자<br/>(Admin)"])
+    end
+
+    subgraph "Presentation Layer (JSP / CSS / JS)"
+        ShopUI[Shop Frontend]
+        StoreUI[Dynamic Store UI]
+        AdminUI[Admin-LTE Dashboard]
+    end
+
+    subgraph "Web Layer (Spring MVC)"
+        Security[Spring Security / Interceptor]
+        ShopCtrl[ShopController]
+        StoreCtrl[StoreMainController<br/>'Dynamic Routing']
+        AdminCtrl[AdminController]
+    end
+
+    subgraph "Service Layer (Business Logic)"
+        OrderSvc[OrderService<br/>'Address Snapshot']
+        ProductSvc[ProductService]
+        SettlementSvc[SettlementService]
+        CommonSvc[Mail/File/Exception]
+    end
+
+    subgraph "Data Access Layer (MyBatis)"
+        Mappers[MyBatis XML Mappers]
+        TypeHandler[EnumTypeHandler]
+    end
+
+    subgraph "Database (MySQL 8.0)"
+        DB[(MySQL Database)]
+    end
+
+    %% 연결 관계
+    User & Seller & Admin --> Security
+    Security --> ShopCtrl & StoreCtrl & AdminCtrl
+    ShopCtrl & StoreCtrl & AdminCtrl --> OrderSvc & ProductSvc & SettlementSvc & CommonSvc
+    OrderSvc & ProductSvc & SettlementSvc & CommonSvc --> TypeHandler
+    TypeHandler --> Mappers
+    Mappers --> DB
+```
+
+#### [아키텍처 설계 특징]
+*   **계층형 아키텍처 (Layered Architecture)**: Presentation, Web, Service, Data Access 계층을 엄격히 분리하여 관심사를 격리하고 유지보수성을 극대화했습니다.
+*   **도메인 기반 패키지 구조**: `admin`, `shop`, `store` 패키지로 도메인을 논리적으로 분리하여 각 페르소나(관리자/소비자/판매자)에 최적화된 비즈니스 로직을 독립적으로 관리합니다.
+*   **동적 뷰 바인딩 시스템**: 하나의 공통 레이아웃을 기반으로 DB에서 조회한 판매자별 메타데이터(로고, 색상, 카테고리)를 실시간 주입하여 수만 개의 독립 스토어를 동적으로 렌더링합니다.
+*   **전역 예외 및 보안 관리**: Spring Security와 커스텀 인터셉터를 통한 접근 제어, `@ControllerAdvice`를 활용한 전역 예외 처리를 통해 시스템의 안정성과 보안성을 확보했습니다.
+
+### 💡 핵심 설계 포인트
+- **데이터 주도형 동적 라우팅**: `@PathVariable`을 활용하여 `/store/{engName}` 형태의 판매자별 독립 URL을 구현하고, DB에 저장된 스토어별 메타데이터를 실시간으로 뷰에 바인딩합니다.
+- **주문 데이터 무결성 (Snapshot 전략)**: 회원이 주소를 수정하더라도 과거 주문 내역의 배송지가 변하지 않도록, 주문 시점의 주소를 `orders` 테이블에 문자열 형태로 직접 저장(Denormalization)합니다.
+- **객체 지향적 카테고리 매핑**: `Root > Top > Sub`로 이어지는 3단계 정규화 테이블 구조를 MyBatis의 `Association`과 `Collection` 매핑을 통해 복합 객체 구조로 바인딩하여 조회 성능과 유연성을 확보했습니다.
 
 ---
-## 🖥️ 실행 화면 캡쳐
-- 마켓 메인 페이지
-<img width="1139" height="674" alt="마켓 메인" src="https://github.com/user-attachments/assets/fbded539-c623-4f12-92c6-c953b881b3d2" />
 
-- 스토어 메인 페이지
-<img width="875" height="707" alt="스토어 메인 페이지" src="https://github.com/user-attachments/assets/df44d45d-6ebc-4ac0-8a30-e71d5c95ca99" />
+## 7. API 및 데이터 응답 예제
 
-- 상품 상세 페이지
-<img width="670" height="695" alt="상품 상세" src="https://github.com/user-attachments/assets/00268b3d-d890-4c9f-93b5-0970ded9d91d" />
+### [스토어별 상품 목록 조회]
+- **Endpoint**: `GET /store/{engName}/all`
+- **Description**: 특정 스토어의 전체 상품 목록을 반환합니다.
 
-- 장바구니 페이지
-<img width="1070" height="707" alt="장바구니" src="https://github.com/user-attachments/assets/ea377d80-3de5-4552-b25c-2460fab2dcd1" />
+### 7-1. 응답 데이터 (JSON)
+```json
+[
+  {
+    "productId": 102,
+    "productName": "Intelli Mechanical Keyboard",
+    "price": 125000,
+    "productStatus": "FOR_SALE",
+    "imageUrl": "/resources/img/product/kb_01.jpg"
+  },
+  {
+    "productId": 105,
+    "productName": "Wireless Mouse G",
+    "price": 45000,
+    "productStatus": "SOLD_OUT",
+    "imageUrl": "/resources/img/product/mouse_05.jpg"
+  }
+]
+```
 
-- 주문/결제 페이지
-<img width="1065" height="705" alt="결제" src="https://github.com/user-attachments/assets/97d7270c-cbee-449c-b295-dd3ea0ce32c4" />
+---
 
-- 마이페이지
-<img width="1259" height="705" alt="마이페이지" src="https://github.com/user-attachments/assets/c066566c-5991-4cc5-a23e-75342edd87b0" />
+## 8. 데이터베이스 모델링 (ERD)
+<!-- ERD 이미지를 여기에 넣으세요 -->
+> ![ERD Diagram](https://via.placeholder.com/800x500.png?text=Database+ERD+Diagram)
 
-- 스토어 관리 페이지(판매자)
-<img width="1279" height="704" alt="판매자 스토어관리 페이지" src="https://github.com/user-attachments/assets/a3b86a0d-226c-4b5f-836d-c48a3c1aa4f2" />
+---
 
-- 마켓 관리 페이지(어드민)
-<img width="1278" height="702" alt="어드민 페이지" src="https://github.com/user-attachments/assets/7a116b00-4cbf-4bfc-b619-d95203dd6cc2" />
+## 🖼️ 주요 화면 구성
+<!-- 주요 화면 스크린샷을 여기에 넣으세요 -->
+| 소비자 메인 | 독립 스토어 홈 | 판매자 어드민 |
+| :---: | :---: | :---: |
+| ![Shop Main](./images/shop_main.png) | ![Store Home](./images/store_page.png) | ![Seller Admin](./images/store_admin.png) |
+
+---
+
+## 👥 프로젝트 참여 인원 및 역할
+| 이름 | 역할 | 담당 업무 및 기여 내용 |
+| :--- | :---: | :--- |
+| **정재환** | **팀장** | 전사 ERD 설계 및 구축, 동적 스토어 아키텍처 설계, 주문 주소 스냅샷 전략 수립 |
+| **구지훈** | 팀원 | 판매자 어드민 시스템(Admin-LTE) 구축, 상품/재고 관리 및 정산 프로세스 구현 |
+| **박혜원** | 팀원 | 공통 모듈 및 전역 예외 처리 설계, 인증/인가 보안 및 MyBatis 커스텀 핸들러 구현 |
+| **신주원** | 팀원 | 소비자 구매 여정(Flow) 설계, 장바구니 및 주문/결제 프로세스 구현 |
