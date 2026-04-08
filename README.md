@@ -177,7 +177,7 @@ graph TD
 
 ## 8. 데이터베이스 모델링 (ERD)
 <!-- ERD 이미지를 여기에 넣으세요 -->
-> ![ERD Diagram](https://via.placeholder.com/800x500.png?text=Database+ERD+Diagram)
+> ![ERD Diagram](./images/erd.png)
 
 ---
 
@@ -192,7 +192,7 @@ graph TD
 ## 👥 프로젝트 참여 인원 및 역할
 | 이름 | 역할 | 담당 업무 및 기여 내용 |
 | :--- | :---: | :--- |
-| **정재환** | **팀장** | 전사 ERD 설계 및 구축, 동적 스토어 아키텍처 설계, 주문 주소 스냅샷 전략 수립 |
-| **구지훈** | 팀원 | 판매자 어드민 시스템(Admin-LTE) 구축, 상품/재고 관리 및 정산 프로세스 구현 |
-| **박혜원** | 팀원 | 공통 모듈 및 전역 예외 처리 설계, 인증/인가 보안 및 MyBatis 커스텀 핸들러 구현 |
-| **신주원** | 팀원 | 소비자 구매 여정(Flow) 설계, 장바구니 및 주문/결제 프로세스 구현 |
+| [정재환](https://github.com/rekindle402)| 팀장 | 전사 ERD 설계 및 구축, 동적 스토어 아키텍처 설계, 주문 스냅샷 전략 수립 |
+| [구지훈](https://github.com/jihoon-devstu2) | 팀원 | 판매자 어드민 시스템(Admin-LTE) 구축, 상품/재고 관리 및 정산 프로세스 구현 |
+| [박혜원](https://github.com/hye000ne) | 팀원 | 공통 모듈 및 전역 예외 처리 설계, 인증/인가 보안 및 MyBatis 커스텀 핸들러 구현 |
+| [신주원](https://github.com/JuWonISee) | 팀원 | 장바구니 및 주문/결제 구현 |
