@@ -1,131 +1,94 @@
-<img width="983" height="241" alt="logo07" src="https://github.com/user-attachments/assets/70e8888d-378d-48a9-ae85-aaf393165f8c" />
+# Intelli Market | 판매자 맞춤형 오픈마켓 플랫폼
 
-# 🛍️  Intelli Market (온라인 마켓플레이스)
-
-> 인텔리마켓은 다수의 판매자와 소비자가 온라인상에서 상거래를 할 수 있도록 중개 역할을 수행하는 플랫폼 입니다.
->
-> 네이버 스마트스토어, 쿠팡등을 참고한 미니 프로젝트 입니다.
+> 이 저장소는 [hye000ne/intellimarket](https://github.com/hye000ne/intellimarket) 팀 프로젝트를 fork한 저장소입니다.
+> 제가 담당한 기여 내용을 중심으로 이 README를 새로 작성했습니다. 팀 프로젝트 원본 소개와 팀원 구성은 원본 저장소를 참고해 주세요.
 
 ---
 
-## 📌 프로젝트 개요
+## 프로젝트 개요
 
-- **기획 의도**: 평범한 온라인 쇼핑몰이 아닌, 다수의 판매자가 입점하여 스토어를 관리/디자인 할 수 있는 플랫폼 개발
-  
-- **기술 스택**: 
-    - 개발 언어 : JAVA 8, JAVASCRIPT
-    - 웹 개발 기술 : JSP, CSS, HTML, Bootstrap
-    - 웹 컨테이너 : Tomcat 8.5
-    - 서버 환경 : Localhost
-    - DBMS : MySQL (Ubutntu 24.04 LTS)
-    - 빌드도구 : Maven
-    - 프레임워크
-        - Spring-webmvc, spring-security-core
-    - 라이브러리
-        -  서블릿 : servlet-api, servlet.jsp-api
-        -  JSP: JSTL
-        -  JDBC : Spring-JDBC / MySQL-connector-java
-        -  SQL 매퍼 : MyBatis / MyBatis-spring
-        -  로깅 추상화 구현: Logback / Slf4j
-        -  코드 자동 생성 : LOMBOK
-        -  JSON 직렬화 : Jackson / jackson-datatype-jsr310
-        -  이메일/편의 : javax.mail-api / sun.mail:javax.mail / spring-context-support
-        -  파일업로드 : commons-fileupload
-    - 기타 환경 :  DBeaver(DB 관리), STS(IDE), Ashion / Admin-LTE (Temlplete), ERD(ERD-CLOUD)
-    - 
-- **프로젝트 구성**: 단일 Maven 프로젝트 내 역할별 패키지 분리
-    - 플랫폼(인텔리마켓) 메인 (shop)
-    - 판매자 페이지 (store)
-    - 플랫폼 관리자 (admin)
+`2025.07 - 2025.08` · 4인 팀(팀장) · 백엔드 담당
 
----
-## 👤 팀 구성 및 역할 분담
+**[기획 배경]**
+오픈마켓은 판매자별로 스토어명, 로고, 카테고리 구성이 상이해 화면과 데이터를 판매자 단위로 유연하게 관리할 구조가 필요합니다.
+스토어·카테고리·상품 정보를 코드에 고정하지 않고 DB 기반으로 관리해, 신규 판매자 입점 시 코드 수정 없이 스토어 운영이 가능하도록 설계했습니다.
 
-| 이름 | 담당 업무 |
-| --- | --- |
-| **구지훈 jihoon-devstu** | 요구사항 명세 설계, 판매자 어드민 페이지 디자인, 판매자 기능(상품관리, 주문관리, 정산관리) |
-| **박혜원 hye000ne** | 프로젝트 구조 설계, 로그인 세션 및 권한 관리, 공통 예외처리, 전체 디자인, 마켓 어드민 기능 전반, 공통 기능 |
-| **신주원 JuWonISee** | 소비자 마이페이지, 고객센터 페이지, 주문 관련 페이지 및 기능 (장바구니, 결제), 소비자 구매내역 관리 |
-| **정재환 rekindle402** | ERD/DB 설계, 스토어 페이지 전반, 개인 스토어 관리(카테고리, 로고, 정보), 회원인증 |
+**[담당 역할]**
+판매자·스토어·카테고리·상품 ERD 설계, 스토어 관리 기능 및 스토어 정보 JSP 렌더링 구현, 판매자 신청 폼·요청 처리 구현
+
+
+**Tech Stack**
+`Java` `Spring MVC` `MyBatis` `MySQL` `JSP`
+
+**[구현 화면]**
+
+| 메인 페이지 | 판매자 스토어 (담당) | 판매자 - 스토어 관리 (담당) |
+| :---: | :---: | :---: |
+| <img src="images/mainPage.png" width="280"> | <img src="images/storePage.png" width="280"> | <img src="images/storeManage.png" width="280"> |
 
 ---
 
-## 📂 디렉토리 구조
+## Trouble Shooting
 
-```
-📦 src/main/java/com.eoneifour
-├── common                      # 공통 설정 / 유틸
-│   ├── controller/             # 메일 처리 컨트롤러
-│   ├── exception/              # 전역 예외 처리
-│   ├── service/                # 메일 서비스
-│   ├── util/                   # 세션, 쿠키, 파일관리, 암호화, 
-│   └── view/                   # 로그인 / 회원가입 뷰
-│
-├── shop, store, admin          # 플랫폼 / 스토어 / 관리자
-│   ├── controller/            
-│   ├── exception/            
-│   ├── service/              
-│   ├── domain/               
-│   ├── dao/ 
-│                                  
-├── resources
-│   ├───mapper/                 # MyBatis 매퍼
-│   ├───logback     
-│ 
-├── webapp
-    ├── WEB-INF/views            
-    ├── common/error           
-    ├── layout             
-    ├── shop
-    ├── store
-```
+<details>
+<summary><b>🔧 1. 스토어 카테고리 삭제 검증과 비즈니스 무결성</b> (클릭하여 펼치기)</summary>
+<br>
+
+**[문제]**
+`products`는 `sub_categories`를 참조하지만, 판매자의 취급 카테고리(`store_categories`)는 상품과 FK로 연결되지 않은 구조였습니다.
+카테고리 삭제 시 DB 제약만으로는 사용 여부를 검증할 수 없어, 사용 중인 카테고리도 삭제 가능한 정합성 문제가 발생했습니다.
+
+**[해결]**
+카테고리 삭제 요청 시 해당 판매자의 상품을 조회하여 삭제 대상 `sub_category_id` 사용 여부를 사전 검증했습니다.
+사용 중인 상품이 존재하면 `StoreCategoryException`에 상품명을 포함해 반환하고 삭제를 중단하도록 구현했습니다.
+
+**[관련 ERD 다이어그램]**
+
+<img src="images/erdDiagram.webp" width="800">
+
+**[결과 및 한계]**
+삭제 후 상품이 스토어에서 노출되지 않는 정합성 문제를 예방하고, 삭제 불가 사유를 상품명과 함께 제공하여 사용자 조치 편의성을 높였습니다.
+다만 현재는 삭제 요청마다 판매자의 전체 상품을 조회하는 구조로, 상품 수 증가 시 `EXISTS` 기반 조회로 개선 가능한 여지가 있습니다.
+
+**[회고]**
+스키마 설계의 결함은 불필요한 조인과 이를 보완하기 위한 서비스 로직 추가로 이어져, 프로젝트의 성능과 안정성에 영향을 준다는 것을 체감했습니다.
+그러나 진행 중인 프로젝트에서의 스키마 변경은 엔티티, Mapper, 서비스 로직 등 여러 영역의 수정을 동반해 적용이 어려운 만큼,
+꼼꼼한 초기 설계와 비즈니스 도메인 이해의 중요성을 배우는 계기가 되었습니다.
+
+관련 코드: [`StoreCategoryServiceImpl.java`](src/main/java/com/intellimarket/store/service/StoreCategoryServiceImpl.java)
+</details>
+
+<details>
+<summary><b>🔧 2. 판매자 승인 시 스토어 중복 생성 방지</b> (클릭하여 펼치기)</summary>
+<br>
+
+**[문제]**
+판매자 승인 시 `sellers` 상태 변경과 `store_info` 생성이 별개의 쓰기 작업으로 분리되어 있는 구조였습니다.
+초기 구현 시 트랜잭션 없이 두 작업을 순차적으로 처리했고, 중간에 예외가 발생하면 `sellers` 상태는 `APPROVED`로 변경됐지만
+`store_info`는 생성되지 않는 불일치 상태가 발생했습니다.
+
+**[해결]**
+`SellerServiceImpl.updateStatus`에 `@Transactional`을 적용해 "판매자 상태 변경 + `store_info` 생성"을 하나의 트랜잭션으로 묶었습니다.
+예외 발생 시 두 작업이 함께 롤백되어 상태 불일치가 발생하지 않도록 원자성을 보장했습니다.
+
+**[시퀀스 다이어그램(성공 케이스)]**
+
+<img src="images/sequenceDiagram.webp" width="600">
+
+**[결과 및 한계]**
+승인 처리 도중 예외가 발생해도 판매자 상태와 스토어 존재 여부가 어긋나지 않습니다.
+`PENDING` 상태에서는 `store_info`가 생성되지 않아, 미승인 판매자의 스토어가 노출되는 상황을 방지했습니다.
+
+**[회고]**
+트랜잭션으로 원자성은 보장했지만, `store_info.seller_id`에 `UNIQUE` 제약이 없어 중복 승인 요청 시 `store_info`가 중복 생성될 가능성은 남아 있습니다.
+서비스 로직만으로는 동시 요청이나 예외 경로를 완전히 막기 어려운 만큼, DB 제약(UNIQUE/NOT NULL 등)과 서비스 레이어 검증을 함께 두는 것이
+안전한 설계임을 체감했습니다.
+
+관련 코드: [`SellerServiceImpl.java`](src/main/java/com/intellimarket/store/service/SellerServiceImpl.java)
+</details>
 
 ---
+이 프로젝트를 Spring Boot + JPA 구조로 개인 리팩토링한 후속 프로젝트는 [Intelli Market v2](https://github.com/rekindle402/IntelliMarket_v2)에서 진행 중입니다.
 
-## ⚙️ 주요 기능별 요약
-
-### 🌐 플랫폼(마켓)
-- 메인페이지 : 회원가입, 로그인, 로그아웃, 비밀번호 찾기(메일 인증), 상품 리스트 출력, 배너 출력,
-  마이페이지, 장바구니, 주문(결제)
-
-### 🛍️ 스토어
-- 카테고리별 상품 리스트 출력, 상품 상세 페이지 출력, 장바구니 담기, 장바구니, 주문(결제)
-
-### 🧾 판매자
-- 상품관리, 주문관리, 스토어 관리, 정산 확인
-
-### 🛠 관리자
-- 회원관리, 스토어 관리, 판매자 관리, 마켓관리, 정산관리 등
-
----
-## 💻 기획안
-[기획안.pdf](https://github.com/user-attachments/files/21618776/default.pdf)
-## 💻 ERD / 테이블
-<img width="2170" height="2462" alt="Intelli Market (3)" src="https://github.com/user-attachments/assets/ec4ff1bf-403b-4b39-b8ed-9075568637a5" />
-<img width="397" height="814" alt="image" src="https://github.com/user-attachments/assets/fe58f126-fb07-4ca0-b5bd-8581e0cd47df" />
-
----
-## 🖥️ 실행 화면 캡쳐
-- 마켓 메인 페이지
-<img width="1139" height="674" alt="마켓 메인" src="https://github.com/user-attachments/assets/fbded539-c623-4f12-92c6-c953b881b3d2" />
-
-- 스토어 메인 페이지
-<img width="875" height="707" alt="스토어 메인 페이지" src="https://github.com/user-attachments/assets/df44d45d-6ebc-4ac0-8a30-e71d5c95ca99" />
-
-- 상품 상세 페이지
-<img width="670" height="695" alt="상품 상세" src="https://github.com/user-attachments/assets/00268b3d-d890-4c9f-93b5-0970ded9d91d" />
-
-- 장바구니 페이지
-<img width="1070" height="707" alt="장바구니" src="https://github.com/user-attachments/assets/ea377d80-3de5-4552-b25c-2460fab2dcd1" />
-
-- 주문/결제 페이지
-<img width="1065" height="705" alt="결제" src="https://github.com/user-attachments/assets/97d7270c-cbee-449c-b295-dd3ea0ce32c4" />
-
-- 마이페이지
-<img width="1259" height="705" alt="마이페이지" src="https://github.com/user-attachments/assets/c066566c-5991-4cc5-a23e-75342edd87b0" />
-
-- 스토어 관리 페이지(판매자)
-<img width="1279" height="704" alt="판매자 스토어관리 페이지" src="https://github.com/user-attachments/assets/a3b86a0d-226c-4b5f-836d-c48a3c1aa4f2" />
-
-- 마켓 관리 페이지(어드민)
-<img width="1278" height="702" alt="어드민 페이지" src="https://github.com/user-attachments/assets/7a116b00-4cbf-4bfc-b619-d95203dd6cc2" />
+## Contact
+- Email: [rekindle402@gmail.com](mailto:rekindle402@gmail.com)
